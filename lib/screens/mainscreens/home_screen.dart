@@ -43,48 +43,70 @@ class HomeScreen extends StatelessWidget {
                 child: GridView.count(
                   crossAxisCount: 2,
                   crossAxisSpacing: 3.w,
-                  mainAxisSpacing: 2.h,
-                  childAspectRatio: 1,
+                  mainAxisSpacing: 3.h,
+                  childAspectRatio: 2,
                   children: [
                     CategoryCard(
-                      title: "Anime",
-                      imageUrl: "https://picsum.photos/id/1011/400/300",
-                      onTap: () => navigateToCategory(context, "Anime"),
+                      title: 'Anime',
+                      backgroundColor: Colors.deepPurple,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Anime'),
                     ),
                     CategoryCard(
-                      title: "Abstract",
-                      imageUrl: "https://picsum.photos/id/1011/400/300",
-                      onTap: () => navigateToCategory(context, "Abstract"),
+                      title: 'Abstract',
+                      backgroundColor: Colors.blueGrey,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Abstract'),
                     ),
                     CategoryCard(
-                      title: "Nature",
-                      imageUrl: "https://picsum.photos/id/1020/400/300",
-                      onTap: () => navigateToCategory(context, "Nature"),
+                      title: 'Nature',
+                      backgroundColor: Colors.green,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Nature'),
                     ),
                     CategoryCard(
-                      title: "Landscape",
-                      imageUrl: "https://picsum.photos/id/1035/400/300",
-                      onTap: () => navigateToCategory(context, "Landscape"),
+                      title: 'Landscape',
+                      backgroundColor: Colors.brown,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Landscape'),
                     ),
                     CategoryCard(
-                      title: "Animals",
-                      imageUrl: "https://picsum.photos/id/1003/400/300",
-                      onTap: () => navigateToCategory(context, "Animals"),
+                      title: 'Animals',
+                      backgroundColor: Colors.orangeAccent,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Animals'),
                     ),
                     CategoryCard(
-                      title: "Art",
-                      imageUrl: "https://picsum.photos/id/1062/400/300",
-                      onTap: () => navigateToCategory(context, "Art"),
+                      title: 'Art',
+                      backgroundColor: Colors.indigo,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Art'),
                     ),
                     CategoryCard(
-                      title: "Aesthetic",
-                      imageUrl: "https://picsum.photos/id/1062/400/300",
-                      onTap: () => navigateToCategory(context, "Aesthetic"),
+                      title: 'Aesthetic',
+                      backgroundColor: Colors.pinkAccent,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Aesthetic'),
                     ),
                     CategoryCard(
-                      title: "Others",
-                      imageUrl: "https://picsum.photos/id/1070/400/300",
-                      onTap: () => navigateToCategory(context, "Others"),
+                      title: 'Others',
+                      backgroundColor: Colors.teal,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Others'),
+                    ),
+                    CategoryCard(
+                      title: 'Gaming',
+                      backgroundColor: Colors.pinkAccent,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () => navigateToCategory(context, 'Gaming'),
+                    ),
+                    CategoryCard(
+                      title: 'Gaming',
+                      backgroundColor: Colors.pinkAccent,
+                      assetImagePath: 'assets/logo/wallifylogo.png',
+                      onTap: () {
+                        print('Gaming card tapped!');
+                      },
                     ),
                   ],
                 ),
@@ -97,51 +119,57 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// Reusable CategoryCard Widget
+//category card
 class CategoryCard extends StatelessWidget {
   final String title;
-  final String imageUrl;
-  final VoidCallback? onTap;
+  final Color backgroundColor;
+  final String assetImagePath;
+  final VoidCallback onTap;
 
   const CategoryCard({
     super.key,
     required this.title,
-    required this.imageUrl,
-    this.onTap,
+    required this.backgroundColor,
+    required this.assetImagePath,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
       onTap: onTap,
       child: Container(
-        width: 40.w, // Responsive width
-        height: 18.h, // Responsive height
+        height: 120,
+        width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(3.w), // Responsive radius
-          color: Colors.grey[900],
-          border: Border.all(
-              color: Colors.white, width: 0.5.w), // Responsive border
-          image: DecorationImage(
-            image: NetworkImage(imageUrl),
-            fit: BoxFit.cover,
-          ),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3.w), // Responsive radius
-                color: Colors.black
-                    .withOpacity(0.3), // Dark overlay for readability
+            // Positioned image bottom right
+            Positioned(
+              bottom: 8,
+              right: 10,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  assetImagePath,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            Center(
+            // Title text top left
+            Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 4.w, // Responsive font size
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
