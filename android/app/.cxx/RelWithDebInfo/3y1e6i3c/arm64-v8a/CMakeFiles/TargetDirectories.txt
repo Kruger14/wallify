@@ -1,0 +1,2 @@
+D:/Flutter/wallify/android/app/.cxx/RelWithDebInfo/3y1e6i3c/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/Flutter/wallify/android/app/.cxx/RelWithDebInfo/3y1e6i3c/arm64-v8a/CMakeFiles/rebuild_cache.dir

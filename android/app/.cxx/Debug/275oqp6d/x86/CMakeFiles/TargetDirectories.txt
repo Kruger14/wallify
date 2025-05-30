@@ -1,0 +1,2 @@
+D:/Flutter/wallify/android/app/.cxx/Debug/275oqp6d/x86/CMakeFiles/edit_cache.dir
+D:/Flutter/wallify/android/app/.cxx/Debug/275oqp6d/x86/CMakeFiles/rebuild_cache.dir

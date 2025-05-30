@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:wallify/screens/mainscreens/navbar.dart';
+import 'package:wallify/presentation/screens/mainscreens/navbar.dart';
 
 void main() {
   runApp(
-     ResponsiveSizer(
+    ResponsiveSizer(
       builder: (context, orientation, screenType) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const MyApp(),
-        );
+        return const MyApp();
       },
     ),
   );
@@ -18,15 +15,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      title: 'Wallify',
+      themeMode: ThemeMode.system, 
+      theme: ThemeData(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true), 
       home: const FloatingNavbar(),
     );
   }
