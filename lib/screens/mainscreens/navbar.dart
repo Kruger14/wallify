@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallify/presentation/screens/mainscreens/home_screen.dart';
-import 'package:wallify/presentation/screens/mainscreens/settings_screen.dart';
+import 'package:wallify/screens/mainscreens/home_screen.dart';
+import 'package:wallify/screens/mainscreens/settings_screen.dart';
 
 class FloatingNavbar extends StatefulWidget {
   const FloatingNavbar({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:wallify/common/utils/appcolors.dart';
-import 'package:wallify/presentation/screens/otherscreens/categorized_wallpaper_screen.dart';
+import 'package:wallify/screens/otherscreens/categorized_wallpaper_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

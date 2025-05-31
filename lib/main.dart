@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:wallify/presentation/screens/mainscreens/navbar.dart';
+import 'package:wallify/screens/mainscreens/navbar.dart';
 
 void main() {
   runApp(

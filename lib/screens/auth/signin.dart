@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:wallify/common/utils/appcolors.dart';
 import 'package:wallify/common/widgets/passfield.dart';
-import 'package:wallify/presentation/screens/auth/signin.dart';
+import 'package:wallify/screens/auth/signup.dart';
+import 'package:wallify/common/utils/custom_toast.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final fullname = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
@@ -48,7 +49,7 @@ class _SignUpState extends State<SignUp> {
                 ),
 
                 Text(
-                  "Sign Up",
+                  "Sign In",
                   style: TextStyle(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.bold,
@@ -56,10 +57,6 @@ class _SignUpState extends State<SignUp> {
                 ),
 
                 SizedBox(height: 3.h),
-
-                // Name Field
-                _buildTextField(Icons.person, "Full Name", controller: fullname),
-                SizedBox(height: 2.h),
 
                 // Email Field
                 _buildTextField(Icons.mail, "Email", controller: email),
@@ -78,8 +75,7 @@ class _SignUpState extends State<SignUp> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("## ${fullname.text} ${email.text} ${password.text}");
-                      // Add signup logic here
+                     showCustomToast("Sign In");
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -91,7 +87,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     child: Text(
-                      "Sign Up",
+                      "Sign In",
                       style: TextStyle(fontSize: 16.sp, color: Colors.white),
                     ),
                   ),
@@ -100,11 +96,11 @@ class _SignUpState extends State<SignUp> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SignIn()),
+                      MaterialPageRoute(builder: (context) => const SignUp()),
                     );
                   },
                   child: Text(
-                    "Have an Account, Sign In ",
+                    "Don't have an account? Sign Up",
                     style: TextStyle(fontSize: 15.sp, color: Colors.blue),
                   ),
                 ),
@@ -116,7 +112,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget _buildTextField(IconData icon, String hint, {TextEditingController? controller}) {
+  Widget _buildTextField(IconData icon, String hint,
+      {TextEditingController? controller}) {
     return TextField(
       controller: controller,
       style: TextStyle(fontSize: 16.sp),
