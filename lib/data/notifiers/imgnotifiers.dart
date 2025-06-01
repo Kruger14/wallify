@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wallify/data/models/wallposters.dart';
+import 'package:wallify/data/models/wallposters.dart' show Wallposters;
 import 'package:wallify/data/services/imageservice.dart';
 
-class Imagenotifiers extends AsyncNotifier<List<Wallposters>> {
-  final ImageService _repo = ImageService();
+class Imagenotifiers extends FamilyAsyncNotifier<List<Wallposters>, String> {
+  late final String category;
+  late final ImageService _repo;
+
   final List<Wallposters> _images = [];
   int _page = 0;
   final int _pageSize = 10;
@@ -13,7 +15,9 @@ class Imagenotifiers extends AsyncNotifier<List<Wallposters>> {
   bool get hasMore => _hasMore;
 
   @override
-  Future<List<Wallposters>> build() async {
+  Future<List<Wallposters>> build(String categoryArg) async {
+    category = categoryArg;
+    _repo = ImageService();
     return await _fetchInitialImages();
   }
 
@@ -21,32 +25,27 @@ class Imagenotifiers extends AsyncNotifier<List<Wallposters>> {
     try {
       final newItems = await _repo.fetchImages(
         limit: _pageSize,
-        offset: _page * _pageSize,
+        offset: _page * _pageSize, category: category,
       );
-
       _page++;
       _hasMore = newItems.length == _pageSize;
       _images.addAll(newItems);
-
       return [..._images];
     } catch (e, st) {
       throw AsyncError(e, st);
     }
   }
 
-  Future<void> fetchNextPage() async {
+  Future<void> fetchNextPage({required String category}) async {
     if (!_hasMore || _isFetching) return;
-
     _isFetching = true;
     try {
       final newItems = await _repo.fetchImages(
         limit: _pageSize,
-        offset: _page * _pageSize,
+        offset: _page * _pageSize, category: category,
       );
-
       _page++;
       if (newItems.length < _pageSize) _hasMore = false;
-
       _images.addAll(newItems);
       state = AsyncData([..._images]);
     } catch (e, st) {
@@ -65,7 +64,8 @@ class Imagenotifiers extends AsyncNotifier<List<Wallposters>> {
   }
 }
 
+
 final imagenotifierProvider =
-    AsyncNotifierProvider<Imagenotifiers, List<Wallposters>>(
+    AsyncNotifierProvider.family<Imagenotifiers, List<Wallposters>, String>(
   Imagenotifiers.new,
 );

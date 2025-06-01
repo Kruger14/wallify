@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:wallify/common/utils/appcolors.dart';
+import 'package:wallify/data/notifiers/imgnotifiers.dart';
 import 'package:wallify/screens/mainscreens/navbar.dart';
 import 'package:wallify/screens/otherscreens/wallpaper_detail_screen.dart';
 import 'package:wallify/data/models/wallposters.dart';
@@ -26,7 +27,9 @@ class _CategorizedWallpaperScreenState
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200) {
-        ref.read(imgProvider.notifier).fetchNext();
+        ref.read(imagenotifierProvider(widget.category).notifier).fetchNextPage(
+          category: widget.category,
+        );
       }
     });
   }
@@ -39,7 +42,7 @@ class _CategorizedWallpaperScreenState
 
   @override
   Widget build(BuildContext context) {
-    final imagesAsync = ref.watch(imgProvider);
+    final imagesAsync = ref.watch(imagenotifierProvider(widget.category));
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.light
@@ -111,13 +114,13 @@ class _CategorizedWallpaperScreenState
                   itemBuilder: (context, index) {
                     final Wallposters poster = wallpapers[index];
                     return WallpaperCard(
-                      imageUrl: poster.imageUrl,
+                      imageUrl: poster.urlImage,
                       onTap: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => DetailWallpaperScreen(
-                              imageUrl: poster.imageUrl,
+                              imageUrl: poster.urlImage,
                               category: widget.category,
                             ),
                           ),
@@ -130,6 +133,40 @@ class _CategorizedWallpaperScreenState
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Reusable Wallpaper Card Component
+class WallpaperCard extends StatelessWidget {
+  final String imageUrl;
+  final VoidCallback onTap;
+
+  const WallpaperCard({
+    super.key,
+    required this.imageUrl,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 2.w, // Adjust shadow size based on screen size
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(3.w),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(3.w),
+            image: DecorationImage(
+              image: NetworkImage(imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }
